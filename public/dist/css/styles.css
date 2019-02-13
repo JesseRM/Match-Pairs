@@ -1,0 +1,23 @@
+body {
+    background-color: #BBCFD7;
+}
+
+h1 {
+    font-family: 'Bangers', cursive;
+    text-align: center;
+    font-size: 3.6rem;
+}
+
+select, option {
+    font-size: 1.2rem;
+}
+
+#main-menu {
+    width: 30%;
+    height: 50%;
+    margin: 1rem auto;
+    background-color: #f9f6f5;
+    border-radius: 0.2rem;
+    font-size: 1.4rem;
+    text-align: center;
+}

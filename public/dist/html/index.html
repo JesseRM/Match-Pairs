@@ -5,9 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Match Pairs</title>
+    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet"> 
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
+    <h1>Match Pairs</h1>
+    <div id="main-menu">
+        <div id="grid-option">
+            <label for="grid-select">Select grid size:</label>
+            <select id="grid-select">
+                <option>4 x 4</option>
+                <option>5 x 5</option>
+                <option>5 x 6</option>
+            </select>
+        </div>
+        <div id="type-option">
+            <label for="type-select">Select value type:</label>
+            <select id="type-select">
+                <option>Number</option>
+                <option>Word</option>
+            </select>
+        </div>
+        <div>
+            <label for="time-select">Select time limit:</label>
+            <select id="time-select">
+                <option>None</option>
+                <option>1 min.</option>
+                <option>2 min.</option>
+                <option>3 min.</option>
+                <option>4 min.</option>
+                <option>5 min.</option>
+            </select>
+        </div>
+        <button type="button" id="play-game">Play Game</button>
+        
+    </div>
     <canvas id='canvas'></canvas>
     <script src="../js/bundle.js"></script>
 </body>
