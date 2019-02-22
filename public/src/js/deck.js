@@ -1,40 +1,34 @@
 import {words} from './words'
 
 class Deck {
-    constructor(type, grid) {
+    constructor(type, grid, canvas) {
         this.type = type;
         this.size = grid[0] * grid[1];
         this.cards = [];
-        this.cardWidth = null;
-        this.cardHeight = null;
-        this.cardPadding = 5;
+        this.cardWidth = canvas.width / grid[0];
+        this.cardHeight = canvas.height / grid[1]; 
     }
 
     setCards(canvas) {
         let values = this.getValues(this.type, this.size);
+        let x = 0, y = 0;
         
         for (let i = 0; i < values.length; i++) {
-            let coordinates = [];
-
-            if (this.cards.length === 0) {
-                coordinates = [this.cardPadding, this.cardPadding];
-            } else {
-                coordinates[0] = this.cards[i - 1]['coordinates'][0] + this.cardWidth + this.cardPadding;
-                coordinates[1] = this.cards[i - 1]['coordinates'][1];
-
-                if (coordinates[0] > canvas.width) {
-                    coordinates[0] = this.cardPadding;
-                    coordinates[1] = this.cards[i - 1]['coordinates'][1] + this.cardHeight + this.cardPadding;
-                }
-            }
-            
             this.cards.push({
                 cardNum: i,
                 value: values[i],
                 width: this.cardWidth,
                 height: this.cardHeight,
-                coordinates: [coordinates[0], coordinates[1]]
-            })
+                x: x,
+                y: y
+            });
+
+            x = x + this.cardWidth;
+
+            if (x >= canvas.width) {
+                x = 0;
+                y = y + this.cardHeight;
+            }
         }
 
     }
@@ -65,3 +59,5 @@ class Deck {
         return values;
     }
 }
+
+export {Deck}
