@@ -23,6 +23,16 @@ class Canvas {
             this.ctx.strokeRect(card.x, card.y, card.width, card.height);
         });
     }
+
+    getClickedCoordinates(event) {
+        let rect = this.element.getBoundingClientRect();
+        let coor = {};
+
+        coor.x = event.clientX - rect.left;
+        coor.y = event.clientY - rect.top;
+
+        return coor;
+    }
 }
 
 export {Canvas}

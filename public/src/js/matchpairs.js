@@ -17,3 +17,7 @@ playBtn.addEventListener('click', () => {
     canvas.draw();
     canvas.drawCards(deck.cards);
 });
+
+canvas.element.addEventListener('click', (event) => {
+    
+})
