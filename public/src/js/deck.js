@@ -38,7 +38,7 @@ class Deck {
 
         if (type === 'number') {
             while (values.length < size) {
-                let rand = Math.floor(Math.random() * (100 - 1) + 1);
+                let rand = String(Math.floor(Math.random() * (100 - 1) + 1));
                 
                 if (values.includes(rand)) continue;
 

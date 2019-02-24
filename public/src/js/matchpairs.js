@@ -7,7 +7,7 @@ let deck = null;
 const game = {
     options: {
         grid: [4, 4],
-        type: 'number'
+        type: 'word'
     }
 }
 
@@ -19,5 +19,5 @@ playBtn.addEventListener('click', () => {
 });
 
 canvas.element.addEventListener('click', (event) => {
-    
+    let clickedCard = deck.getClickedCard(canvas.getClickedCoordinates(event));
 })

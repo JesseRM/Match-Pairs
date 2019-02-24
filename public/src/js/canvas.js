@@ -33,6 +33,14 @@ class Canvas {
 
         return coor;
     }
+
+    drawValue(card) {
+        this.ctx.fillStyle = '#dad5d5';
+        this.ctx.fillRect(card.x, card.y, card.width, card.height);
+        this.ctx.font = '25px serif';
+        this.ctx.fillStyle = '#100f0f';
+        this.ctx.fillText(card.value, card.x, card.y + 20);
+    }
 }
 
 export {Canvas}
