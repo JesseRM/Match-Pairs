@@ -10,7 +10,7 @@ class Deck {
     }
 
     setCards(canvas) {
-        let values = this.getValues(this.type, this.size);
+        let values = this.randomizeVals(this.getValues(this.type, this.size));
         let x = 0, y = 0;
         
         for (let i = 0; i < values.length; i++) {
@@ -66,6 +66,18 @@ class Deck {
                     return this.cards[i];
                 }
         }
+    }
+
+    randomizeVals(values) {
+        let vals = [...values];
+        
+        for (let i = vals.length - 1; i > 0; i--) {
+            let j = Math.floor(Math.random() * (i + 1));
+
+            [vals[i], vals[j]] = [vals[j], vals[i]];
+        }
+
+        return vals;
     }
 }
 
