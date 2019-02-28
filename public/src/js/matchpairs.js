@@ -10,7 +10,8 @@ const game = {
         type: 'word'
     },
     cardsDisplayed: 0,
-    cardsClicked: []
+    cardsClicked: [],
+    userInput: true
 }
 
 playBtn.addEventListener('click', () => {
@@ -23,5 +24,31 @@ playBtn.addEventListener('click', () => {
 canvas.element.addEventListener('click', (event) => {
     let clickedCard = deck.getClickedCard(canvas.getClickedCoordinates(event));
     
+    if (clickedCard.matched !== true && !game.cardsClicked.includes(clickedCard) && game.userInput) {
+        game.cardsDisplayed++;
+        
+        if (game.cardsDisplayed <= 2) {
+            canvas.drawValue(clickedCard);
+            game.cardsClicked.push(clickedCard);
+        }
 
-})
+        if (game.cardsDisplayed === 2) {
+            game.userInput = false;
+            
+            if (game.cardsClicked[0]['value'] !== game.cardsClicked[1]['value']) {
+                setTimeout(() => {
+                    canvas.drawCards(game.cardsClicked);
+                    game.cardsClicked = [];
+                    game.userInput = true;
+                }, 1000);
+            } else {
+                game.cardsClicked[0]['matched'] = true;
+                game.cardsClicked[1]['matched'] = true;
+                game.cardsClicked = [];
+                game.userInput = true;
+            }
+
+            game.cardsDisplayed = 0;
+        }
+    }
+}); 

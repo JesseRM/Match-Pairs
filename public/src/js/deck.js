@@ -19,6 +19,7 @@ class Deck {
                 value: values[i],
                 width: this.cardWidth,
                 height: this.cardHeight,
+                matched: false,
                 x: x,
                 y: y
             });
