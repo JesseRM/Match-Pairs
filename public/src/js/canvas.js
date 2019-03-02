@@ -35,11 +35,26 @@ class Canvas {
     }
 
     drawValue(card) {
-        this.ctx.fillStyle = '#dad5d5';
-        this.ctx.fillRect(card.x, card.y, card.width, card.height);
         this.ctx.font = '25px serif';
         this.ctx.fillStyle = '#100f0f';
         this.ctx.fillText(card.value, card.x, card.y + 20);
+    }
+
+    drawSelectedCard(card) {
+        this.ctx.fillStyle = '#dad5d5';
+        this.ctx.fillRect(card.x, card.y, card.width, card.height);
+        this.ctx.lineWidth = 5;
+        this.ctx.strokeStyle = '#b5361b';
+        this.ctx.strokeRect(card.x, card.y, card.width, card.height);
+        this.drawValue(card);
+    }
+
+    drawMatchedCards(cards) {
+        cards.forEach((card) => {
+            this.ctx.lineWidth = 5;
+            this.ctx.strokeStyle = '#001017';
+            this.ctx.strokeRect(card.x, card.y, card.width, card.height);
+        });
     }
 }
 

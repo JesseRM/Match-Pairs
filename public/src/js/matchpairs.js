@@ -28,7 +28,7 @@ canvas.element.addEventListener('click', (event) => {
         game.cardsDisplayed++;
         
         if (game.cardsDisplayed <= 2) {
-            canvas.drawValue(clickedCard);
+            canvas.drawSelectedCard(clickedCard);
             game.cardsClicked.push(clickedCard);
         }
 
@@ -42,6 +42,7 @@ canvas.element.addEventListener('click', (event) => {
                     game.userInput = true;
                 }, 1000);
             } else {
+                canvas.drawMatchedCards(game.cardsClicked);
                 game.cardsClicked[0]['matched'] = true;
                 game.cardsClicked[1]['matched'] = true;
                 game.cardsClicked = [];
