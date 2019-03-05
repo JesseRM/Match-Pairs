@@ -53,3 +53,4 @@ canvas.element.addEventListener('click', (event) => {
         }
     }
 }); 
+

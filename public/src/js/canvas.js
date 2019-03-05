@@ -35,9 +35,10 @@ class Canvas {
     }
 
     drawValue(card) {
-        this.ctx.font = '25px serif';
+        this.ctx.font = '20px Roboto';
         this.ctx.fillStyle = '#100f0f';
-        this.ctx.fillText(card.value, card.x, card.y + 20);
+        this.ctx.textAlign = 'center';
+        this.ctx.fillText(card.value, card.x + (card.width / 2), card.y + (card.height / 2));
     }
 
     drawSelectedCard(card) {
