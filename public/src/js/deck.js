@@ -5,6 +5,7 @@ class Deck {
         this.type = type;
         this.size = grid[0] * grid[1];
         this.cards = [];
+        this.matched = 0;
         this.cardWidth = canvas.width / grid[0];
         this.cardHeight = canvas.height / grid[1]; 
     }

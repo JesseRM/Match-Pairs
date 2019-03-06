@@ -1,5 +1,6 @@
 import {Canvas} from './canvas'
 import {Deck} from './deck'
+import {endGame} from './game'
 
 const playBtn = document.querySelector('#play-btn');
 const canvas = new Canvas(500, 300, '#27566B', document.querySelector('#canvas'));
@@ -47,9 +48,14 @@ canvas.element.addEventListener('click', (event) => {
                 game.cardsClicked[1]['matched'] = true;
                 game.cardsClicked = [];
                 game.userInput = true;
+                deck.matched += 2;
             }
 
             game.cardsDisplayed = 0;
+
+            if (deck.matched === deck.size) {
+                endGame('win', canvas);
+            }
         }
     }
 }); 
