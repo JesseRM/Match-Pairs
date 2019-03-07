@@ -9,4 +9,25 @@ function endGame(type, canvas) {
     }
 }
 
-export {endGame};
+function getMenuVals(menu) {
+    const vals = {};
+    let min = null;
+
+    if (menu.gridSize.value === '4 x 4') vals.grid = [4, 4];
+    else if (menu.gridSize.value === '4 x 5') vals.grid = [4, 5];
+    else if (menu.gridSize.value === '5 x 6') vals.grid = [5, 6];
+    else vals.grid = [4, 4];
+
+    vals.type = menu.type.value.toLowerCase();
+    min = parseInt(menu.time.value[0], 10);
+
+    if (min && min > 0 && min <= 5) {
+        vals.time = min;
+    } else {
+        vals.time = 0;
+    }
+
+    return vals;
+}
+
+export {endGame, getMenuVals};

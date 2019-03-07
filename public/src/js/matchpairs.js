@@ -1,21 +1,24 @@
 import {Canvas} from './canvas'
 import {Deck} from './deck'
-import {endGame} from './game'
+import {endGame, getMenuVals} from './game'
 
 const playBtn = document.querySelector('#play-btn');
+const menuElements = {
+    gridSize: document.querySelector('#grid-select'),
+    type: document.querySelector('#type-select'),
+    time: document.querySelector('#time-select')
+}
 const canvas = new Canvas(500, 300, '#27566B', document.querySelector('#canvas'));
 let deck = null;
 const game = {
-    options: {
-        grid: [4, 4],
-        type: 'word'
-    },
+    options: null,
     cardsDisplayed: 0,
     cardsClicked: [],
     userInput: true
 }
 
 playBtn.addEventListener('click', () => {
+    game.options = getMenuVals(menuElements);
     deck = new Deck(game.options.type, game.options.grid, canvas);
     deck.setCards(canvas);
     canvas.draw();
