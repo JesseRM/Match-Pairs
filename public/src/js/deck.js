@@ -61,6 +61,10 @@ class Deck {
         return values;
     }
 
+    getImages(size) {
+        let imageNames = [];
+    }
+
     getClickedCard(coor) {
         for (let i = 0; i < this.cards.length; i++) {
             if (coor.x >= this.cards[i].x && coor.x <= (this.cards[i].x + this.cardWidth)
