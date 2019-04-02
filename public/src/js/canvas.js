@@ -35,10 +35,15 @@ class Canvas {
     }
 
     drawValue(card) {
-        this.ctx.font = '20px Roboto';
-        this.ctx.fillStyle = '#100f0f';
-        this.ctx.textAlign = 'center';
-        this.ctx.fillText(card.value, card.x + (card.width / 2), card.y + (card.height / 2));
+        if (card.type === 'picture') {
+            this.ctx.drawImage(card.value, card.x, card.y);
+        } else {   
+            this.ctx.font = '20px Roboto';
+            this.ctx.fillStyle = '#100f0f';
+            this.ctx.textAlign = 'center';
+            this.ctx.fillText(card.value, card.x + (card.width / 2), card.y + (card.height / 2));
+        }
+    
     }
 
     drawSelectedCard(card) {

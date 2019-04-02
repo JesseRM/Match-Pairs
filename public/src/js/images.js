@@ -50,3 +50,5 @@ const images = [
     'wizard',
     'wonder-woman'
 ]
+
+export {images}

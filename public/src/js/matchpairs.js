@@ -20,9 +20,12 @@ const game = {
 playBtn.addEventListener('click', () => {
     game.options = getMenuVals(menuElements);
     deck = new Deck(game.options.type, game.options.grid, canvas);
-    deck.setCards(canvas);
-    canvas.draw();
-    canvas.drawCards(deck.cards);
+    
+    deck.getValues().then((values) => {
+        deck.setCards(values, canvas);
+        canvas.draw();
+        canvas.drawCards(deck.cards);
+    });
 });
 
 canvas.element.addEventListener('click', (event) => {
