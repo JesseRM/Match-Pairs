@@ -10,14 +10,16 @@ const menuElements = {
 }
 const canvas = new Canvas(500, 300, '#27566B', document.querySelector('#canvas'));
 let deck = null;
-const game = {
-    options: null,
-    cardsDisplayed: 0,
-    cardsClicked: [],
-    userInput: true
-}
+let game = null;
 
 playBtn.addEventListener('click', () => {
+    game = {
+        options: null,
+        cardsDisplayed: 0,
+        cardsClicked: [],
+        userInput: true
+    }
+    
     game.options = getMenuVals(menuElements);
     deck = new Deck(game.options.type, game.options.grid, canvas);
     
