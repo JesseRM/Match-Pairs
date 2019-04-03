@@ -36,7 +36,12 @@ class Canvas {
 
     drawValue(card) {
         if (card.type === 'picture') {
-            this.ctx.drawImage(card.value, card.x, card.y);
+            let picWidth = card.value.width > card.width ? (card.width - 20) : card.value.width;
+            let picHeight = card.value.height > card.height ? (card.height - 20) : card.value.height;
+            let picX = card.x + ((card.width - picWidth) / 2);
+            let picY = card.y + ((card.height - picHeight) / 2);
+            
+            this.ctx.drawImage(card.value, picX, picY, picWidth, picHeight);
         } else {   
             this.ctx.font = '20px Roboto';
             this.ctx.fillStyle = '#100f0f';

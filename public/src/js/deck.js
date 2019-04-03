@@ -43,7 +43,6 @@ class Deck {
             if (this.type === 'number') resolve(this.getNumbers());
             if (this.type === 'picture') {
                 this.getImages().then((images) => {
-                    console.log(images);
                     resolve(images);
                 });
             }
@@ -79,7 +78,6 @@ class Deck {
     }
 
     async getImages() {
-        console.log('getimages ran');
         let imgNames = this.getImageNames(images);
         let imgs = [];
 

@@ -8,7 +8,7 @@ const menuElements = {
     type: document.querySelector('#type-select'),
     time: document.querySelector('#time-select')
 }
-const canvas = new Canvas(500, 300, '#27566B', document.querySelector('#canvas'));
+const canvas = new Canvas(600, 600, '#27566B', document.querySelector('#canvas'));
 let deck = null;
 let game = null;
 
