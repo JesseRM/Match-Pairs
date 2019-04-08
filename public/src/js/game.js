@@ -1,17 +1,19 @@
-function endGame(type, canvas) {
-    if (type === 'win') {
-        canvas.ctx.fillStyle = 'rgba(230, 235, 244, 0.6)';
-        canvas.ctx.fillRect(0, 0, canvas.width, canvas.height);
-        canvas.ctx.font = '80px Roboto';
-        canvas.ctx.fillStyle = '#148207';
-        canvas.ctx.textAlign = 'center';
-        canvas.ctx.fillText('You win!', canvas.width / 2, canvas.height / 2);
-    }
+function endGame(type, game, canvas) {
+    game.userInput = false;
+    
+    canvas.setFont('50px Bangers');
+    canvas.ctx.fillStyle = 'rgba(230, 235, 244, 0.7)';
+    canvas.ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    if (type === 'win') canvas.ctx.fillStyle = '#148207';
+    if (type === 'loose') canvas.ctx.fillStyle = '#b80404';
+
+    canvas.ctx.textAlign = 'center';
+    canvas.ctx.fillText(type === 'win' ? 'You win!' : 'Out of time...', canvas.width / 2, canvas.height / 2);
 }
 
 function getMenuVals(menu) {
     const vals = {};
-    let min = null;
 
     if (menu.gridSize.value === '4 x 4') vals.grid = [4, 4];
     else if (menu.gridSize.value === '4 x 5') vals.grid = [4, 5];
@@ -19,15 +21,47 @@ function getMenuVals(menu) {
     else vals.grid = [4, 4];
 
     vals.type = menu.type.value.toLowerCase();
-    min = parseInt(menu.time.value[0], 10);
+    
+    if (menu.time.value !== 'None') {
+        vals.timer = {};
+        let min = parseInt(menu.time.value, 10);
 
-    if (min && min > 0 && min <= 5) {
-        vals.time = min;
-    } else {
-        vals.time = 0;
+        if (min && min > 0 && min <= 5) {
+            vals.timer.seconds = min * 60;
+        } else {
+            vals.timer.seconds = 0;
+        }
     }
 
     return vals;
 }
 
-export {endGame, getMenuVals};
+function displayTimeLeft(secs, timeDisplay) {
+    let minutes = Math.floor(secs / 60);
+    let seconds = secs % 60;
+    let time = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    timeDisplay.textContent = time;
+}
+
+function startTimer(game, display, canvas) {
+    let then = Date.now() + game.options.timer.seconds * 1000;
+    
+    displayTimeLeft(game.options.timer.seconds, display);
+
+    game.options.timer.id = setInterval(() => {
+
+        game.options.timer.secondsLeft = Math.round((then - Date.now()) / 1000);
+
+        if (game.options.timer.secondsLeft < 0) {
+            clearInterval(game.options.timer.id);
+
+            endGame('loose', game, canvas)
+            return;
+        }
+
+        displayTimeLeft(game.options.timer.secondsLeft, display);
+    }, 1000);
+}
+
+export {endGame, getMenuVals, startTimer};

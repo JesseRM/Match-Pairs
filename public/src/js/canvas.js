@@ -43,15 +43,15 @@ class Canvas {
             
             this.ctx.drawImage(card.value, picX, picY, picWidth, picHeight);
         } else {   
-            this.ctx.font = '20px Roboto';
             this.ctx.fillStyle = '#100f0f';
             this.ctx.textAlign = 'center';
             this.ctx.fillText(card.value, card.x + (card.width / 2), card.y + (card.height / 2));
         }
-    
     }
 
-    drawSelectedCard(card) {
+    drawSelectedCard(card, font) {
+        if (font) this.ctx.font = `20px ${font}`;
+        
         this.ctx.fillStyle = '#dad5d5';
         this.ctx.fillRect(card.x, card.y, card.width, card.height);
         this.ctx.lineWidth = 5;
@@ -66,6 +66,10 @@ class Canvas {
             this.ctx.strokeStyle = '#001017';
             this.ctx.strokeRect(card.x, card.y, card.width, card.height);
         });
+    }
+
+    setFont(font) {
+        this.ctx.font = font;
     }
 }
 

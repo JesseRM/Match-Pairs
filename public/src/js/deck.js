@@ -29,6 +29,7 @@ class Deck {
 
             x = x + this.cardWidth;
 
+            //Check if we need to start a new row
             if (x >= canvas.width) {
                 x = 0;
                 y = y + this.cardHeight;

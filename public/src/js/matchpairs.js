@@ -1,7 +1,8 @@
 import {Canvas} from './canvas'
 import {Deck} from './deck'
-import {endGame, getMenuVals} from './game'
+import {endGame, getMenuVals, startTimer} from './game'
 
+const timerDisplay = document.querySelector('#timer');
 const playBtn = document.querySelector('#play-btn');
 const menuElements = {
     gridSize: document.querySelector('#grid-select'),
@@ -17,10 +18,11 @@ playBtn.addEventListener('click', () => {
         options: null,
         cardsDisplayed: 0,
         cardsClicked: [],
-        userInput: true
+        userInput: true,
     }
     
     game.options = getMenuVals(menuElements);
+    
     deck = new Deck(game.options.type, game.options.grid, canvas);
     
     deck.getValues().then((values) => {
@@ -28,6 +30,8 @@ playBtn.addEventListener('click', () => {
         canvas.draw();
         canvas.drawCards(deck.cards);
     });
+
+    if (game.options.timer.seconds) startTimer(game, timerDisplay, canvas);
 });
 
 canvas.element.addEventListener('click', (event) => {
@@ -37,7 +41,7 @@ canvas.element.addEventListener('click', (event) => {
         game.cardsDisplayed++;
         
         if (game.cardsDisplayed <= 2) {
-            canvas.drawSelectedCard(clickedCard);
+            canvas.drawSelectedCard(clickedCard, 'Bangers');
             game.cardsClicked.push(clickedCard);
         }
 
@@ -62,7 +66,7 @@ canvas.element.addEventListener('click', (event) => {
             game.cardsDisplayed = 0;
 
             if (deck.matched === deck.size) {
-                endGame('win', canvas);
+                endGame('win', game, canvas);
             }
         }
     }
