@@ -14,6 +14,8 @@ let deck = null;
 let game = null;
 
 playBtn.addEventListener('click', () => {
+    if (game && game.options.timer.id) clearInterval(game.options.timer.id);
+    
     game = {
         options: null,
         cardsDisplayed: 0,

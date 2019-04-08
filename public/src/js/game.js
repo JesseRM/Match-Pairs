@@ -21,9 +21,9 @@ function getMenuVals(menu) {
     else vals.grid = [4, 4];
 
     vals.type = menu.type.value.toLowerCase();
+    vals.timer = {};
     
     if (menu.time.value !== 'None') {
-        vals.timer = {};
         let min = parseInt(menu.time.value, 10);
 
         if (min && min > 0 && min <= 5) {
