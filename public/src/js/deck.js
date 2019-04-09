@@ -41,7 +41,7 @@ class Deck {
     getValues() {
         return new Promise((resolve) => {
             if (this.type === 'word') resolve(this.getWords(words));
-            if (this.type === 'number') resolve(this.getNumbers());
+            if (this.type === 'number') resolve(this.getNumbers(1, 100));
             if (this.type === 'picture') {
                 this.getImages().then((images) => {
                     resolve(images);
@@ -50,11 +50,11 @@ class Deck {
         });   
     }
 
-    getNumbers() {
+    getNumbers(min, max) {
         let nums = [];
 
         while (nums.length < this.size) {
-            let rand = String(Math.floor(Math.random() * (100 - 1) + 1));
+            let rand = String(Math.floor(Math.random() * (max - min + 1) + min));
             
             if (nums.includes(rand)) continue;
 

@@ -1,4 +1,6 @@
 function endGame(type, game, canvas) {
+    if (game && game.options.timer.id) clearInterval(game.options.timer.id);
+    
     game.userInput = false;
     
     canvas.setFont('50px Bangers');
