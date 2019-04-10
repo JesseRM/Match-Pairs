@@ -1,6 +1,8 @@
 import {Canvas} from './canvas'
 import {Deck} from './deck'
 import {endGame, getMenuVals, startTimer} from './game'
+import {words} from './words'
+import {images} from './images'
 
 const timerDisplay = document.querySelector('#timer');
 const playBtn = document.querySelector('#play-btn');
@@ -27,11 +29,14 @@ playBtn.addEventListener('click', () => {
     game.options = getMenuVals(menuElements);
     
     deck = new Deck(game.options.type, game.options.grid, canvas);
+
+    if (deck.type === 'word') deck.possibleVals = words;
+    if (deck.type === 'picture') deck.possibleVals = images;
     
     deck.getValues().then((values) => {
         deck.setCards(values, canvas);
         canvas.draw();
-        canvas.drawCards(deck.cards);
+        canvas.drawBlankCards(deck.cards);
     });
 
     if (game.options.timer.seconds) startTimer(game, timerDisplay, canvas);
@@ -54,13 +59,13 @@ canvas.element.addEventListener('click', (event) => {
             if (game.cardsClicked[0]['value'] !== game.cardsClicked[1]['value']) {
                 setTimeout(() => {
                     if (game.isRunning) {
-                        canvas.drawCards(game.cardsClicked);
+                        canvas.drawBlankCards(game.cardsClicked);
                         game.cardsClicked = [];
                         game.userInput = true;
                     }  
                 }, 1000);
             } else {
-                canvas.drawMatchedCards(game.cardsClicked);
+                canvas.setMatchedCards(game.cardsClicked);
                 game.cardsClicked[0]['matched'] = true;
                 game.cardsClicked[1]['matched'] = true;
                 game.cardsClicked = [];

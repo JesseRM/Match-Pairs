@@ -1,10 +1,8 @@
-import {words} from './words'
-import {images} from './images'
-
 class Deck {
     constructor(type, grid, canvas) {
         this.type = type;
         this.size = grid[0] * grid[1];
+        this.possibleVals = null;
         this.cards = [];
         this.matched = 0;
         this.cardWidth = canvas.width / grid[0];
@@ -13,7 +11,7 @@ class Deck {
 
     setCards(values, canvas) {
         let vals = this.randomizeVals([...values]);
-        let x = 0, y = 0;
+        let posX = 0, posY = 0;
         
         for (let i = 0; i < vals.length; i++) {
             this.cards.push({
@@ -23,24 +21,23 @@ class Deck {
                 width: this.cardWidth,
                 height: this.cardHeight,
                 matched: false,
-                x: x,
-                y: y
+                x: posX,
+                y: posY
             });
 
-            x = x + this.cardWidth;
+            posX = posX + this.cardWidth;
 
             //Check if we need to start a new row
-            if (x >= canvas.width) {
-                x = 0;
-                y = y + this.cardHeight;
+            if (posX >= canvas.width) {
+                posX = 0;
+                posY = posY + this.cardHeight;
             }
         }
-
     }
 
     getValues() {
         return new Promise((resolve) => {
-            if (this.type === 'word') resolve(this.getWords(words));
+            if (this.type === 'word') resolve(this.getWords());
             if (this.type === 'number') resolve(this.getNumbers(1, 100));
             if (this.type === 'picture') {
                 this.getImages().then((images) => {
@@ -64,22 +61,22 @@ class Deck {
         return nums;
     }
 
-    getWords(wordArr) {
+    getWords() {
         let words = [];
         
         while (words.length < this.size) {
-            let rand = Math.floor(Math.random() * (wordArr.length));
+            let rand = Math.floor(Math.random() * (this.possibleVals.length));
 
-            if (words.includes(wordArr[rand])) continue;
+            if (words.includes(this.possibleVals[rand])) continue;
 
-            words.push(wordArr[rand], wordArr[rand]);
+            words.push(this.possibleVals[rand], this.possibleVals[rand]);
         }
 
         return words;
     }
 
     async getImages() {
-        let imgNames = this.getImageNames(images);
+        let imgNames = this.getImageNames();
         let imgs = [];
 
         for (let i = 0; i < imgNames.length; i++) {
@@ -91,24 +88,24 @@ class Deck {
         return imgs;
     }
 
-    getImageNames(imageNames) {
+    getImageNames() {
         let names = [];
 
         while (names.length < this.size / 2) {
-            let rand = Math.floor(Math.random() * (imageNames.length));
+            let rand = Math.floor(Math.random() * (this.possibleVals.length));
 
-            if (names.includes(imageNames[rand])) continue;
+            if (names.includes(this.possibleVals[rand])) continue;
 
-            names.push(imageNames[rand]);
+            names.push(this.possibleVals[rand]);
         }
 
         return names;
     }
 
-    loadImage(path) {
+    loadImage(imgName) {
         return new Promise((resolve, reject) => {
             let img = new Image();
-            img.src = `./images/${path}.png`;
+            img.src = `./images/${imgName}.png`;
             
             img.onload = () => {
                 console.log('loaded');
@@ -116,7 +113,7 @@ class Deck {
             }
 
             img.onerror = () => {
-                console.log('Error');
+                console.log('Error loading image');
             }
         });
     }

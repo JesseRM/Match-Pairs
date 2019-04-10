@@ -14,7 +14,7 @@ class Canvas {
         this.ctx.fillRect(0, 0, this.width, this.height);
     }
 
-    drawCards(cards) {
+    drawBlankCards(cards) {
         cards.forEach(card => {
             this.ctx.fillStyle = '#5C8495';
             this.ctx.fillRect(card.x, card.y, card.width, card.height);
@@ -60,7 +60,7 @@ class Canvas {
         this.drawValue(card);
     }
 
-    drawMatchedCards(cards) {
+    setMatchedCards(cards) {
         cards.forEach((card) => {
             this.ctx.lineWidth = 5;
             this.ctx.strokeStyle = '#001017';
