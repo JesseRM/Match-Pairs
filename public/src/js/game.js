@@ -1,7 +1,8 @@
 function endGame(type, game, canvas) {
-    if (game && game.options.timer.id) clearInterval(game.options.timer.id);
-    
     game.userInput = false;
+    game.isRunning = false;
+    
+    if (game && game.options.timer.id) clearInterval(game.options.timer.id);
     
     canvas.setFont('50px Bangers');
     canvas.ctx.fillStyle = 'rgba(230, 235, 244, 0.7)';

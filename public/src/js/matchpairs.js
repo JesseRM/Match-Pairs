@@ -21,6 +21,7 @@ playBtn.addEventListener('click', () => {
         cardsDisplayed: 0,
         cardsClicked: [],
         userInput: true,
+        isRunning: true
     }
     
     game.options = getMenuVals(menuElements);
@@ -39,7 +40,7 @@ playBtn.addEventListener('click', () => {
 canvas.element.addEventListener('click', (event) => {
     let clickedCard = deck.getClickedCard(canvas.getClickedCoordinates(event));
     
-    if (clickedCard.matched !== true && !game.cardsClicked.includes(clickedCard) && game.userInput) {
+    if (game.userInput && clickedCard.matched !== true && !game.cardsClicked.includes(clickedCard)) {
         game.cardsDisplayed++;
         
         if (game.cardsDisplayed <= 2) {
@@ -52,9 +53,11 @@ canvas.element.addEventListener('click', (event) => {
             
             if (game.cardsClicked[0]['value'] !== game.cardsClicked[1]['value']) {
                 setTimeout(() => {
-                    canvas.drawCards(game.cardsClicked);
-                    game.cardsClicked = [];
-                    game.userInput = true;
+                    if (game.isRunning) {
+                        canvas.drawCards(game.cardsClicked);
+                        game.cardsClicked = [];
+                        game.userInput = true;
+                    }  
                 }, 1000);
             } else {
                 canvas.drawMatchedCards(game.cardsClicked);

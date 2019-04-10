@@ -1,5 +1,6 @@
 body {
     background-color: #BBCFD7;
+    font-family: 'Roboto', sans-serif;
 }
 
 h1 {
@@ -12,6 +13,11 @@ select, option {
     font-size: 1.2rem;
 }
 
+canvas {
+    margin: 1rem auto;
+    display: block;
+}
+
 #main-menu {
     width: 30%;
     height: 50%;
@@ -20,4 +26,9 @@ select, option {
     border-radius: 0.2rem;
     font-size: 1.4rem;
     text-align: center;
+}
+
+#timer {
+    text-align: center;
+    font-size: 2rem;
 }
