@@ -12,7 +12,7 @@
     <h1>Match Pairs</h1>
     <div id="main-menu">
         <div id="grid-option">
-            <label for="grid-select">Select grid size:</label>
+            <label for="grid-select">Grid size:</label>
             <select id="grid-select">
                 <option>4 x 4</option>
                 <option>4 x 5</option>
@@ -20,15 +20,15 @@
             </select>
         </div>
         <div id="type-option">
-            <label for="type-select">Select value type:</label>
+            <label for="type-select">Value type:</label>
             <select id="type-select">
                  <option>Picture</option>
                  <option>Number</option>
                  <option>Word</option>            
             </select>
         </div>
-        <div>
-            <label for="time-select">Select time limit:</label>
+        <div id="time-option">
+            <label for="time-select">Time limit:</label>
             <select id="time-select">
                 <option>None</option>
                 <option>1 min.</option>
@@ -41,7 +41,7 @@
         <button type="button" id="play-btn">Play Game</button>
     </div>
     <div id="timer"></div>
-    <canvas id='canvas'></canvas>
+    <canvas id="canvas"></canvas>
     <script src="../js/bundle.js"></script>
 </body>
 </html>

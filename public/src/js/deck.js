@@ -5,8 +5,8 @@ class Deck {
         this.possibleVals = null;
         this.cards = [];
         this.matched = 0;
-        this.cardWidth = canvas.width / grid[0];
-        this.cardHeight = canvas.height / grid[1]; 
+        this.cardWidth = canvas.element.width / grid[0];
+        this.cardHeight = canvas.element.height / grid[1]; 
     }
 
     setCards(values, canvas) {
@@ -28,7 +28,7 @@ class Deck {
             posX = posX + this.cardWidth;
 
             //Check if we need to start a new row
-            if (posX >= canvas.width) {
+            if (posX >= canvas.element.width) {
                 posX = 0;
                 posY = posY + this.cardHeight;
             }

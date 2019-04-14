@@ -11,12 +11,15 @@ const menuElements = {
     type: document.querySelector('#type-select'),
     time: document.querySelector('#time-select')
 }
-const canvas = new Canvas(600, 600, '#27566B', document.querySelector('#canvas'));
+const canvas = new Canvas('#27566B', document.querySelector('#canvas'));
 let deck = null;
 let game = null;
 
 playBtn.addEventListener('click', () => {
-    if (game && game.options.timer.id) clearInterval(game.options.timer.id);
+    if (game && game.options.timer.id) {
+        timerDisplay.textContent = '';
+        clearInterval(game.options.timer.id);
+    }
     
     game = {
         options: null,
@@ -28,6 +31,7 @@ playBtn.addEventListener('click', () => {
     
     game.options = getMenuVals(menuElements);
     
+    canvas.setContext();
     deck = new Deck(game.options.type, game.options.grid, canvas);
 
     if (deck.type === 'word') deck.possibleVals = words;

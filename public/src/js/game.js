@@ -6,13 +6,13 @@ function endGame(type, game, canvas) {
     
     canvas.setFont('50px Bangers');
     canvas.ctx.fillStyle = 'rgba(230, 235, 244, 0.7)';
-    canvas.ctx.fillRect(0, 0, canvas.width, canvas.height);
+    canvas.ctx.fillRect(0, 0, canvas.element.width, canvas.element.height);
     
     if (type === 'win') canvas.ctx.fillStyle = '#148207';
     if (type === 'loose') canvas.ctx.fillStyle = '#b80404';
 
     canvas.ctx.textAlign = 'center';
-    canvas.ctx.fillText(type === 'win' ? 'You win!' : 'Out of time...', canvas.width / 2, canvas.height / 2);
+    canvas.ctx.fillText(type === 'win' ? 'You win!' : 'Out of time...', canvas.element.width / 2, canvas.element.height / 2);
 }
 
 function getMenuVals(menu) {
