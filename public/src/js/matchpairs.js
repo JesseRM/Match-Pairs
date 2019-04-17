@@ -41,6 +41,7 @@ playBtn.addEventListener('click', () => {
         deck.setCards(values, canvas);
         canvas.draw();
         canvas.drawBlankCards(deck.cards);
+        canvas.element.classList.add('shadow');
     });
 
     if (game.options.timer.seconds) startTimer(game, timerDisplay, canvas);
