@@ -9,6 +9,10 @@ class Deck {
         this.cardHeight = canvas.element.height / grid[1]; 
     }
 
+    setPossibleVals(values) {
+        this.possibleVals = values;
+    }
+
     setCards(values, canvas) {
         let vals = this.randomizeVals([...values]);
         let posX = 0, posY = 0;
