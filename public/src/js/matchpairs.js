@@ -34,14 +34,14 @@ playBtn.addEventListener('click', () => {
     canvas.setContext();
     deck = new Deck(game.options.type, game.options.grid, canvas);
 
-    if (deck.type === 'word') deck.possibleVals = words;
-    if (deck.type === 'picture') deck.possibleVals = images;
+    if (deck.type === 'word') deck.setPossibleVals(words);
+    if (deck.type === 'picture') deck.setPossibleVals(images);
     
     deck.getValues().then((values) => {
         deck.setCards(values, canvas);
         canvas.draw();
         canvas.drawBlankCards(deck.cards);
-        canvas.element.classList.add('shadow');
+        canvas.addCssClass('shadow');
     });
 
     if (game.options.timer.seconds) startTimer(game, timerDisplay, canvas);
