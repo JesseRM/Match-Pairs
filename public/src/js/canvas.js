@@ -73,6 +73,10 @@ class Canvas {
     setFont(font) {
         this.ctx.font = font;
     }
+
+    addCssClass(className) {
+        this.element.classList.add(className);
+    }
 }
 
 export {Canvas}
