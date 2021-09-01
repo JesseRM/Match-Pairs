@@ -50,6 +50,8 @@ playBtn.addEventListener('click', () => {
 canvas.element.addEventListener('click', (event) => {
     let clickedCard = deck.getClickedCard(canvas.getClickedCoordinates(event));
     
+    // Check if user is allowed to make a selection, if the selected card has not been matched
+    // and if the card has not already been selected
     if (game.userInput && clickedCard.matched !== true && !game.cardsClicked.includes(clickedCard)) {
         game.cardsDisplayed++;
         
@@ -58,9 +60,12 @@ canvas.element.addEventListener('click', (event) => {
             game.cardsClicked.push(clickedCard);
         }
 
+        // If two cards are currently being displayed, do not allow the user to make another selection
+        // and check for a match
         if (game.cardsDisplayed === 2) {
             game.userInput = false;
             
+            //If the two selected cards don't match "fip" them over
             if (game.cardsClicked[0]['value'] !== game.cardsClicked[1]['value']) {
                 setTimeout(() => {
                     if (game.isRunning) {
@@ -80,6 +85,7 @@ canvas.element.addEventListener('click', (event) => {
 
             game.cardsDisplayed = 0;
 
+            // If the number of matched cards is equal to the toal size  of the deck, user has won
             if (deck.matched === deck.size) {
                 endGame('win', game, canvas);
             }
