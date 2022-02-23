@@ -7,7 +7,7 @@ Some of the objectives of this project were to attempt to employ OOP principles 
 import/export (ES6) to organize code into different files.  Some the the main challenges of this project were having the cards and their values appear in the correct locations as well as having them adjust depending on viewport size, loading pictures using promises to ensure
 everything was loaded prior to drawing on canvas element and employing a time limit.
 
-![](screenshot/matchpairs.jpg)
+<img src="https://raw.githubusercontent.com/JesseRM/Match-Pairs/master/screenshot/matchpairs.jpg" width="700">
 
 ## Usage
 [Live Demo](http://matchpairs.herokuapp.com/)
