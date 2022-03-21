@@ -13,7 +13,7 @@ class GameBoard {
   setContext() {
     this.canvasEl.width = this.canvasEl.clientWidth;
     this.canvasEl.height = this.canvasEl.clientHeight;
-    this.ctx = this.canvasEl.getContext('2d');
+    this.ctx = this.canvasEl.getContext("2d");
   }
 
   draw() {
@@ -42,7 +42,7 @@ class GameBoard {
   }
 
   drawValue(card, textColor, font) {
-    if (card.type === 'picture') {
+    if (card.type === "picture") {
       const picWidth = card.value.width > card.width ? (card.width - 20) : card.value.width;
       const picHeight = card.value.height > card.height ? (card.height - 20) : card.value.height;
       const picX = card.x + ((card.width - picWidth) / 2);
@@ -59,8 +59,8 @@ class GameBoard {
 
   drawSelectedCard(card, options) {
     const fontName = options.font;
-    const textColor = options.fillStyle ? options.fillStyle : '#100f0f';
-    const font = `${this.font}px ${fontName ? fontName : ''}`;
+    const textColor = options.fillStyle ? options.fillStyle : "#100f0f";
+    const font = `${this.font}px ${fontName ? fontName : ""}`;
     
     this.ctx.fillStyle = this.faceCardColor;
     this.ctx.fillRect(card.x, card.y, card.width, card.height);
