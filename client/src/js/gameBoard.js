@@ -81,6 +81,14 @@ class GameBoard {
   addCssClass(className) {
     this.canvasEl.classList.add(className);
   }
+
+  getWidth() {
+    return this.canvasEl.width;
+  }
+
+  getHeight() {
+    return this.canvasEl.height;
+  }
 }
 
 export default GameBoard;
