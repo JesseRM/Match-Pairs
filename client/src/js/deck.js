@@ -22,7 +22,7 @@ class Deck {
     
     for (let i = 0; i < vals.length; i++) {
       this.cards.push({
-        cardNum: i,
+        id: i,
         type: this.type,
         value: vals[i],
         width: this.cardWidth,
@@ -109,6 +109,14 @@ class Deck {
     return names;
   }
 
+  getCards() {
+    return this.cards;
+  }
+
+  getSize() {
+    return this.size;
+  }
+
   loadImage(imgName) {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -118,8 +126,8 @@ class Deck {
         resolve(img);
       }
 
-      img.onerror = () => {
-        console.log("Error loading image " + imgName);
+      img.onerror = (message) => {
+        reject(message);
       }
     });
   }
@@ -143,6 +151,24 @@ class Deck {
     }
 
     return vals;
+  }
+
+  getMatched() {
+    return this.matched;
+  }
+
+  setMatched(matched) {
+    this.matched = matched;
+  }
+
+  setCardMatchedStatus(card, value) {
+    for (let i = 0; i < this.size; i++) {
+      if (this.cards[i] === card) {
+        this.cards[i].matched = value;
+
+        break;
+      }
+    }
   }
 }
 
