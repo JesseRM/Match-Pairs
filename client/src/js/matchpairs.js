@@ -1,95 +1,88 @@
-import {Canvas} from './canvas'
-import {Deck} from './deck'
-import {endGame, getMenuVals, startTimer} from './game'
-import {words} from './words'
-import {images} from './images'
+import {initGame, initGameBoard, initDeck, endGame, startTimer} from "./game.js";
+import words from "./words.js";
+import imageNames from "./imageNames.js";
 
-const timerDisplay = document.querySelector('#timer');
-const playBtn = document.querySelector('#play-btn');
+const timerDisplay = document.querySelector("#timer");
+const playBtn = document.querySelector("#play-btn");
 const menuElements = {
-    gridSize: document.querySelector('#grid-select'),
-    type: document.querySelector('#type-select'),
-    time: document.querySelector('#time-select')
-}
-const canvas = new Canvas('#27566B', document.querySelector('#canvas'));
+  gridSize: document.querySelector("#grid-select"),
+  type: document.querySelector("#type-select"),           
+  time: document.querySelector("#time-select")
+};
+const canvas = document.querySelector("#game-board");
+let gameBoard = null;
 let deck = null;
 let game = null;
 
-playBtn.addEventListener('click', () => {
-    if (game && game.options.timer.id) {
-        timerDisplay.textContent = '';
-        clearInterval(game.options.timer.id);
-    }
-    
-    game = {
-        options: null,
-        cardsDisplayed: 0,
-        cardsClicked: [],
-        userInput: true,
-        isRunning: true
-    }
-    
-    game.options = getMenuVals(menuElements);
-    
-    canvas.setContext();
-    deck = new Deck(game.options.type, game.options.grid, canvas);
+playBtn.addEventListener("click", () => {
+  if (game && game.options.timer.id) {
+    timerDisplay.textContent = "";
+    clearInterval(game.options.timer.id);
+  }
 
-    if (deck.type === 'word') deck.setPossibleVals(words);
-    if (deck.type === 'picture') deck.setPossibleVals(images);
-    
-    deck.getValues().then((values) => {
-        deck.setCards(values, canvas);
-        canvas.draw();
-        canvas.drawBlankCards(deck.cards);
-        canvas.addCssClass('shadow');
-    });
+  game = initGame(menuElements);
+  gameBoard = initGameBoard(canvas);
+  deck = initDeck(game, gameBoard.getWidth(), gameBoard.getHeight());
 
-    if (game.options.timer.seconds) startTimer(game, timerDisplay, canvas);
+  if (deck.type === "word") deck.setPossibleVals(words);
+  if (deck.type === "picture") deck.setPossibleVals(imageNames);
+  
+  deck.getValues().then((values) => {
+    deck.setCards(values, gameBoard.getWidth());
+    gameBoard.draw();
+    gameBoard.drawBlankCards(deck.getCards());
+    gameBoard.addCssClass("shadow");
+  });
+
+  if (game.options.timer.seconds) startTimer(game, timerDisplay, gameBoard);
 });
 
-canvas.element.addEventListener('click', (event) => {
-    let clickedCard = deck.getClickedCard(canvas.getClickedCoordinates(event));
+canvas.addEventListener("click", (event) => {
+  const clickedCard = deck.getClickedCard(gameBoard.getClickedCoordinates(event));
+  
+  // Check if user is allowed to make a selection, if the selected card has not been matched
+  // and if the card has not already been selected
+  if (game.userInput && !clickedCard.matched && !game.cardsClicked.includes(clickedCard)) {
+    game.cardsDisplayed++;
     
-    // Check if user is allowed to make a selection, if the selected card has not been matched
-    // and if the card has not already been selected
-    if (game.userInput && clickedCard.matched !== true && !game.cardsClicked.includes(clickedCard)) {
-        game.cardsDisplayed++;
-        
-        if (game.cardsDisplayed <= 2) {
-            canvas.drawSelectedCard(clickedCard, 'Bangers');
-            game.cardsClicked.push(clickedCard);
-        }
-
-        // If two cards are currently being displayed, do not allow the user to make another selection
-        // and check for a match
-        if (game.cardsDisplayed === 2) {
-            game.userInput = false;
-            
-            //If the two selected cards don't match "fip" them over
-            if (game.cardsClicked[0]['value'] !== game.cardsClicked[1]['value']) {
-                setTimeout(() => {
-                    if (game.isRunning) {
-                        canvas.drawBlankCards(game.cardsClicked);
-                        game.cardsClicked = [];
-                        game.userInput = true;
-                    }  
-                }, 1000);
-            } else {
-                canvas.setMatchedCards(game.cardsClicked);
-                game.cardsClicked[0]['matched'] = true;
-                game.cardsClicked[1]['matched'] = true;
-                game.cardsClicked = [];
-                game.userInput = true;
-                deck.matched += 2;
-            }
-
-            game.cardsDisplayed = 0;
-
-            // If the number of matched cards is equal to the toal size  of the deck, user has won
-            if (deck.matched === deck.size) {
-                endGame('win', game, canvas);
-            }
-        }
+    if (game.cardsDisplayed <= 2) {
+      const options = {
+        font: "Bangers"
+      };
+      gameBoard.drawSelectedCard(clickedCard, options);
+      game.cardsClicked.push(clickedCard);
     }
-}); 
 
+    // If two cards are currently being displayed, do not allow the user to make another selection
+    // and check for a match
+    if (game.cardsDisplayed === 2) {
+      game.userInput = false;
+      
+      //If the two selected cards don't match "flip" them over
+      if (game.cardsClicked[0]["value"] !== game.cardsClicked[1]["value"]) {
+        setTimeout(() => {
+          if (game.isRunning) {
+            gameBoard.drawBlankCards(game.cardsClicked);
+            game.cardsClicked = [];
+            game.userInput = true;
+          }  
+        }, 1000);
+      } else {
+        gameBoard.setMatchedCards(game.cardsClicked);
+        deck.setCardMatchedStatus(game.cardsClicked[0], true);
+        deck.setCardMatchedStatus(game.cardsClicked[1], true);
+        game.cardsClicked = [];
+        game.userInput = true;
+        const numCardsMatched = 2;
+        deck.setMatched(deck.getMatched() + numCardsMatched);
+      }
+
+      game.cardsDisplayed = 0;
+
+      // If the number of matched cards is equal to the toal size  of the deck, user has won
+      if (deck.getMatched() === deck.getSize()) {
+        endGame("win", game, gameBoard);
+      }
+    }
+  }
+}); 
