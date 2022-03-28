@@ -41,22 +41,6 @@ class GameBoard {
     return coor;
   }
 
-  drawValue(card, textColor, font) {
-    if (card.type === "picture") {
-      const picWidth = card.value.width > card.width ? (card.width - 20) : card.value.width;
-      const picHeight = card.value.height > card.height ? (card.height - 20) : card.value.height;
-      const picX = card.x + ((card.width - picWidth) / 2);
-      const picY = card.y + ((card.height - picHeight) / 2);
-      
-      this.ctx.drawImage(card.value, picX, picY, picWidth, picHeight);
-    } else {   
-      this.ctx.fillStyle = textColor;
-      this.ctx.textAlign = 'center';
-      this.ctx.font = font;
-      this.ctx.fillText(card.value, card.x + (card.width / 2), card.y + (card.height / 2));
-    }
-  }
-
   drawSelectedCard(card, options) {
     const fontName = options.font;
     const textColor = options.fillStyle ? options.fillStyle : "#100f0f";
@@ -107,4 +91,32 @@ class GameBoard {
   }
 }
 
-export default GameBoard;
+class GameBoardText extends GameBoard {
+  constructor(canvasEl) {
+    super(canvasEl);
+  }
+
+  drawValue(card, textColor, font) {
+    this.ctx.fillStyle = textColor;
+    this.ctx.textAlign = 'center';
+    this.ctx.font = font;
+    this.ctx.fillText(card.value, card.x + (card.width / 2), card.y + (card.height / 2));
+  }
+}
+
+class GameBoardImage extends GameBoard {
+  constructor(canvasEl) {
+    super(canvasEl);
+  }
+
+  drawValue(card) {
+    const picWidth = card.value.width > card.width ? (card.width - 20) : card.value.width;
+    const picHeight = card.value.height > card.height ? (card.height - 20) : card.value.height;
+    const picX = card.x + ((card.width - picWidth) / 2);
+    const picY = card.y + ((card.height - picHeight) / 2);
+    
+    this.ctx.drawImage(card.value, picX, picY, picWidth, picHeight);
+  }
+}
+
+export {GameBoardText, GameBoardImage};
