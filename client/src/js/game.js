@@ -1,5 +1,5 @@
-import GameBoard from "./gameBoard.js";
-import Deck from "./deck.js";
+import { GameBoardImage, GameBoardText } from "./model/gameBoard.js";
+import Deck from "./model/deck.js";
 
 function initGame(menuElements) {
   const game = {
@@ -15,21 +15,31 @@ function initGame(menuElements) {
   return game;
 }
 
-function initDeck(gameState, gameBoardWidth, gameBoardHeight) {
+function initDeck(gameState, values, gameBoardWidth, gameBoardHeight) {
   const gridColums = gameState.options.grid[0];
   const gridRows = gameState.options.grid[1];
-  const deckSize = gridColums * gridRows;
   const cardWidth = gameBoardWidth / gridColums;
   const cardHeight = gameBoardHeight / gridRows;
+  const shuffled = [];
 
-  const deck = new Deck(gameState.options.type, deckSize, cardWidth, cardHeight);
+  for (let value of values) shuffled.push(value, value);
+
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); 
+
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  const deck = new Deck(gameState.options.type, shuffled, cardWidth, cardHeight);
 
   return deck;
 }
 
-function initGameBoard(canvasEl) {
-  const gameBoard = new GameBoard(canvasEl);
+function initGameBoard(canvasEl, type) {
+  let gameBoard = null;
 
+  if (type === "picture") gameBoard = new GameBoardImage(canvasEl);
+  if (type !== "picture") gameBoard = new GameBoardText(canvasEl);
   gameBoard.setContext()
   
   return gameBoard;
