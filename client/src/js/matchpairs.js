@@ -1,6 +1,6 @@
-import {initGame, initGameBoard, initDeck, endGame, startTimer} from "./game.js";
-import words from "./words.js";
-import imageNames from "./imageNames.js";
+"use strict";
+import { initGame, initGameBoard, initDeck, endGame, startTimer } from "./game.js";
+import getValues from "./model/cardValues.js";
 
 const timerDisplay = document.querySelector("#timer");
 const playBtn = document.querySelector("#play-btn");
@@ -10,6 +10,7 @@ const menuElements = {
   time: document.querySelector("#time-select")
 };
 const canvas = document.querySelector("#game-board");
+
 let gameBoard = null;
 let deck = null;
 let game = null;
@@ -21,18 +22,17 @@ playBtn.addEventListener("click", () => {
   }
 
   game = initGame(menuElements);
-  gameBoard = initGameBoard(canvas);
-  deck = initDeck(game, gameBoard.getWidth(), gameBoard.getHeight());
+  gameBoard = initGameBoard(canvas, game.options.type);
+  const valueSize = (game.options.grid[0] * game.options.grid[1]) / 2;
 
-  if (deck.type === "word") deck.setPossibleVals(words);
-  if (deck.type === "picture") deck.setPossibleVals(imageNames);
-  
-  deck.getValues().then((values) => {
-    deck.setCards(values, gameBoard.getWidth());
-    gameBoard.draw();
-    gameBoard.drawBlankCards(deck.getCards());
-    gameBoard.addCssClass("shadow");
-  });
+  getValues(game.options.type, valueSize, 1, 500)
+    .then((values) => {
+      deck = initDeck(game, values, gameBoard.getWidth(), gameBoard.getHeight());
+      deck.setCards(gameBoard.getWidth());
+      gameBoard.draw();
+      gameBoard.drawBlankCards(deck.getCards());
+      gameBoard.addCssClass("shadow");
+    });
 
   if (game.options.timer.seconds) startTimer(game, timerDisplay, gameBoard);
 });
